@@ -254,6 +254,9 @@ class SphinxObjDoc(SphinxDocString):
         SphinxDocString.__init__(self, doc, config=config)
 
 def get_doc_object(obj, what=None, doc=None, config={}):
+    if obj is not None:
+        doc = pydoc.getdoc(obj)
+
     if what is None:
         if inspect.isclass(obj):
             what = 'class'
