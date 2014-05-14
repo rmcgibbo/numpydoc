@@ -218,6 +218,11 @@ class SphinxDocString(NumpyDocString):
             return self._str_section('Examples')
 
     def __str__(self, indent=0, func_role="obj"):
+        if hasattr(self, '_cls'):
+            print(self._cls)
+        if hasattr(self, '_f'):
+            print(self._f)
+
         out = []
         out += self._str_signature()
         out += self._str_index() + ['']
