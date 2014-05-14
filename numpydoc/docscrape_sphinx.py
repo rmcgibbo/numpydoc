@@ -240,7 +240,16 @@ class SphinxDocString(NumpyDocString):
         for param_list in ('Attributes', 'Methods'):
             out += self._str_member_list(param_list)
         out = self._str_indent(out,indent)
-        return '\n'.join(out)
+
+        for line in out:
+            try:
+                line.decode('utf-8', 'error')
+            except UnicodeError:
+                print("ERROR PROCESSING: ", line.decode('utf-8', 'ignore'))
+                raise
+
+        return '\n'.join((e.decode('utf-8', 'replace') for e in out))
+        #return '\n'.join(out)
 
 class SphinxFunctionDoc(SphinxDocString, FunctionDoc):
     def __init__(self, obj, doc=None, config={}):
